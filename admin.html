@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UHDplus - لوحة التحكم</title>
+    <link rel="stylesheet" href="admin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav>
+            <div class="logo">UHDplus Admin</div>
+            <a href="index.html" class="website-btn">العودة للموقع</a>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Add Content Form -->
+        <section class="add-content">
+            <h2>إضافة محتوى جديد</h2>
+            <form id="contentForm">
+                <div class="form-group">
+                    <label for="title">اسم العمل</label>
+                    <input type="text" id="title" required>
+                </div>
+
+                <div class="form-group">
+                    <label>نوع العمل</label>
+                    <div class="radio-group">
+                        <label>
+                            <input type="radio" name="type" value="movie" checked>
+                            فيلم
+                        </label>
+                        <label>
+                            <input type="radio" name="type" value="series">
+                            مسلسل
+                        </label>
+                    </div>
+                </div>
+
+                <!-- إدارة المواسم والحلقات -->
+                <div class="form-group" id="seasonGroup" style="display: none;">
+                    <label>إدارة المواسم والحلقات</label>
+                    <div id="seasonsContainer">
+                        <!-- سيتم إضافة المواسم هنا ديناميكيًا -->
+                    </div>
+                    <button type="button" class="addSeasonBtn">+ إضافة موسم</button>
+                </div>
+
+                <div class="form-group">
+                    <label>التصنيفات</label>
+                    <div class="categories-group">
+                        <label><input type="checkbox" value="action"> أكشن</label>
+                        <label><input type="checkbox" value="drama"> دراما</label>
+                        <label><input type="checkbox" value="comedy"> كوميدي</label>
+                        <label><input type="checkbox" value="horror"> رعب</label>
+                        <label><input type="checkbox" value="romance"> رومانسي</label>
+                        <label><input type="checkbox" value="scifi"> خيال علمي</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="description">الوصف</label>
+                    <textarea id="description" rows="4" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="year">سنة الإنتاج</label>
+                    <input type="number" id="year" min="1900" max="2024" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="rating">التقييم</label>
+                    <input type="number" id="rating" min="0" max="10" step="0.1" required>
+                </div>
+
+                <!-- إضافة بوسترين -->
+                <div class="form-group">
+                    <label for="posterPortrait">بوستر عمودي (بالطول)</label>
+                    <input type="file" id="posterPortrait" accept="image/*" required>
+                    <div id="posterPortraitPreview" class="poster-preview"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="posterLandscape">بوستر أفقي (بالعرض)</label>
+                    <input type="file" id="posterLandscape" accept="image/*" required>
+                    <div id="posterLandscapePreview" class="poster-preview"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="contentUrl">رابط المحتوى (للفيلم فقط)</label>
+                    <input type="url" id="contentUrl">
+                </div>
+
+                <button type="submit" class="submit-btn">إضافة المحتوى</button>
+            </form>
+        </section>
+
+        <!-- TMDB Search Section -->
+        <section class="tmdb-search">
+            <h2>بحث في TMDB</h2>
+            <div class="search-bar">
+                <input type="text" id="tmdbSearchInput" placeholder="ابحث عن فيلم أو مسلسل...">
+                <button id="tmdbSearchBtn">بحث</button>
+            </div>
+            <div class="tmdb-results" id="tmdbResults">
+                <!-- نتائج البحث من TMDB سيتم عرضها هنا -->
+            </div>
+        </section>
+
+        <!-- إدارة أقسام الصفحة الرئيسية -->
+        <section class="manage-sections">
+            <h2>إدارة أقسام الصفحة الرئيسية</h2>
+            <form id="sectionForm">
+                <div class="form-group">
+                    <label for="sectionName">اسم القسم</label>
+                    <input type="text" id="sectionName" required>
+                </div>
+                <button type="submit" class="submit-btn">إضافة قسم</button>
+            </form>
+            <div class="sections-list" id="sectionsList">
+                <!-- الأقسام المضافة سيتم عرضها هنا -->
+            </div>
+        </section>
+
+        <!-- Content List -->
+        <section class="content-list">
+            <h2>المحتوى المضاف</h2>
+            <div class="filter-bar">
+                <button class="filter-btn active" data-filter="all">الكل</button>
+                <button class="filter-btn" data-filter="movie">الأفلام</button>
+                <button class="filter-btn" data-filter="series">المسلسلات</button>
+            </div>
+
+            <!-- Search and Sort Bar -->
+            <div class="search-sort-bar">
+                <input type="text" id="searchInput" placeholder="ابحث باسم العمل...">
+                <select id="sortSelect">
+                    <option value="dateAdded">ترتيب حسب التاريخ</option>
+                    <option value="rating">ترتيب حسب التقييم</option>
+                    <option value="year">ترتيب حسب السنة</option>
+                </select>
+            </div>
+            
+            <div class="content-grid" id="contentGrid">
+                <!-- Content items will be added here dynamically -->
+            </div>
+        </section>
+    </main>
+
+    <!-- Notification Container -->
+    <div id="notification" class="notification"></div>
+
+    <script src="admin.js"></script>
+</body>
+</html>
